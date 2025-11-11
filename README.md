@@ -32,16 +32,16 @@ idf.py flash
 
 - For the ESP32S series   
 	W5500 SPI PHY.   
-	![Image](https://github.com/user-attachments/assets/fb138a71-2f3e-4f7e-a32b-6e7de3b448a2)
-	![Image](https://github.com/user-attachments/assets/20fabd0f-3222-4bc4-8c99-f9773934d00d)
+	![Image](https://github.com/user-attachments/assets/fb138a71-2f3e-4f7e-a32b-6e7de3b448a2)   
+	![Image](https://github.com/user-attachments/assets/20fabd0f-3222-4bc4-8c99-f9773934d00d)   
 
 - For the ESP32C series   
 	W5500 SPI PHY.   
 	![Image](https://github.com/user-attachments/assets/9d5ff23a-8152-41bc-85cb-57d21ad7da1f)
 
 # Configuration for HTTP Server   
-![Image](https://github.com/user-attachments/assets/cec26b98-a664-4973-a9f5-f0015f637c7b)
-![Image](https://github.com/user-attachments/assets/e4a138ec-b7dc-4962-a834-ad2db7b46b68)
+![Image](https://github.com/user-attachments/assets/cec26b98-a664-4973-a9f5-f0015f637c7b)   
+![Image](https://github.com/user-attachments/assets/e4a138ec-b7dc-4962-a834-ad2db7b46b68)   
 The listening port for WiFi and the listening port for Ethernet must be different ports.   
 
 # Configuration for Connection   
