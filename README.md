@@ -1,5 +1,5 @@
 # esp-idf-dual-http-server
-Dual HTTP server fot ESP-IDF.   
+Dual HTTP server for ESP-IDF.   
 
 The ESP32 can use two interfaces simultaneously: WiFi and Ethernet.   
 The esp-idf repository comes with many example projects.   
@@ -47,6 +47,7 @@ The listening port for WiFi and the listening port for Ethernet must be differen
 # Configuration for Connection   
 - Using external LAN8720 RMII PHY   
 You will need to add a jumper to the LAN8270 according to [this](https://sautter.com/blog/ethernet-on-esp32-using-lan8720/) page.   
+Then, connect the LAN8720 and ESP32 with wires according to [this](https://sautter.com/blog/ethernet-on-esp32-using-lan8720/) page.   
 ![Image](https://github.com/user-attachments/assets/9a0e7dbd-29f9-4ec5-9032-1ba454eea785)
 
 - Using WT32-ETH01   
