@@ -1,2 +1,59 @@
 # esp-idf-dual-http-server
-Dual HTTP server fot ESP-IDF
+Dual HTTP server fot ESP-IDF.   
+
+The ESP32 can use two interfaces simultaneously: WiFi and Ethernet.   
+The esp-idf repository comes with many example projects.   
+However, there are no example projects that launch two HTTP servers using both the WiFi and Ethernet interfaces simultaneously.   
+This project is an example that demonstrates how to run two HTTP servers using both the WiFi and Ethernet interfaces simultaneously.   
+You can display different HTML documents for WiFi and Ethernet.   
+
+# Software requirements
+ESP-IDF V5.0 or later.   
+ESP-IDF V4.4 release branch reached EOL in July 2024.   
+
+# Installation
+```
+git clone https://github.com/nopnop2002/esp-idf-dual-http-server
+cd esp-idf-dual-http-server
+idf.py set-target {esp32/esp32s2/esp32s3/esp32c2/esp32c3/esp32c6}
+idf.py menuconfig
+idf.py flash
+```
+
+# Hardware requirements
+- For ESP32
+LAN8720 RMII PHY or W5500 SPI PHY.   
+![Image](https://github.com/user-attachments/assets/c9d50275-d897-4df8-86dd-f4cbaaa27ab2)
+![Image](https://github.com/user-attachments/assets/b8bc8403-5a6f-44da-b6d9-17e472a77ce7)
+
+You can use WT32-ETH01 development board.   
+WT32-ETH01 is a development board that integrates ESP32 and LAN8720A.   
+![Image](https://github.com/user-attachments/assets/8886f354-4121-4617-8e10-c6552442d85c)
+
+- For the ESP32S series
+W5500 SPI PHY.   
+![Image](https://github.com/user-attachments/assets/fb138a71-2f3e-4f7e-a32b-6e7de3b448a2)
+![Image](https://github.com/user-attachments/assets/20fabd0f-3222-4bc4-8c99-f9773934d00d)
+
+- For the ESP32C series
+W5500 SPI PHY.   
+![Image](https://github.com/user-attachments/assets/9d5ff23a-8152-41bc-85cb-57d21ad7da1f)
+
+# Configuration   
+- Using external LAN8720 RMII PHY
+You will need to add a jumper to the LAN8270 according to [this](https://sautter.com/blog/ethernet-on-esp32-using-lan8720/) page.   
+![Image](https://github.com/user-attachments/assets/9a0e7dbd-29f9-4ec5-9032-1ba454eea785)
+
+- Using WT32-ETH01
+![Image](https://github.com/user-attachments/assets/ecf17ee4-2b27-4f0b-8b3b-1d150de6af1d)
+
+- Using external W5500 SPI PHY
+Any GPIO can be used.   
+However, interrupts require a GPIO that supports interrupts.   
+Increasing the SPI clock speed will result in an error.   
+![Image](https://github.com/user-attachments/assets/00c3dd99-59c7-48d1-930f-ae4a6a2fca18)
+
+# Performance   
+LAN8720's performance is up to 2.5MB/sec.   
+W5500's performance is up to 0.9MB/sec.   
+LAN8720 is very fast.   
