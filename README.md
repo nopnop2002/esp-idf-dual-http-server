@@ -3,8 +3,8 @@ Dual HTTP server for ESP-IDF.
 
 The esp-idf repository comes with many example projects.   
 However, there is no example project that starts two HTTP servers simultaneously.   
-This project is an example that demonstrates how to run two HTTP servers simultaneously. 
-The two HTTP servers can display different HTML documents.
+This project is an example that demonstrates how to run two HTTP servers simultaneously.   
+The two HTTP servers can display different HTML documents.   
 
 # Software requirements
 ESP-IDF V5.0 or later.   
