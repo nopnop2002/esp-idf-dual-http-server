@@ -16,6 +16,6 @@ You can display different HTML documents for Primary port and Secondary port.
 
 # WiFi+Ethernet project
 The ESP32 can use two interfaces simultaneously: WiFi and Ethernet.   
-The WiFi interface and the Ethernet interface can run two HTTP servers on different address and port number.
+The WiFi interface and the Ethernet interface can run two HTTP servers on different address and port number.   
 You can display different HTML documents for WiFi interface and Ethernet interface.   
 
