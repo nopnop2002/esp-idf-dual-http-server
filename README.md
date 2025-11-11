@@ -21,33 +21,38 @@ idf.py flash
 ```
 
 # Hardware requirements
-- For ESP32
-LAN8720 RMII PHY or W5500 SPI PHY.   
-![Image](https://github.com/user-attachments/assets/c9d50275-d897-4df8-86dd-f4cbaaa27ab2)
-![Image](https://github.com/user-attachments/assets/b8bc8403-5a6f-44da-b6d9-17e472a77ce7)
+- For ESP32   
+	LAN8720 RMII PHY or W5500 SPI PHY.   
+	![Image](https://github.com/user-attachments/assets/c9d50275-d897-4df8-86dd-f4cbaaa27ab2)
+	![Image](https://github.com/user-attachments/assets/b8bc8403-5a6f-44da-b6d9-17e472a77ce7)
 
-You can use WT32-ETH01 development board.   
-WT32-ETH01 is a development board that integrates ESP32 and LAN8720A.   
-![Image](https://github.com/user-attachments/assets/8886f354-4121-4617-8e10-c6552442d85c)
+	You can use WT32-ETH01 development board.   
+	WT32-ETH01 is a development board that integrates ESP32 and LAN8720A.   
+	![Image](https://github.com/user-attachments/assets/8886f354-4121-4617-8e10-c6552442d85c)
 
-- For the ESP32S series
-W5500 SPI PHY.   
-![Image](https://github.com/user-attachments/assets/fb138a71-2f3e-4f7e-a32b-6e7de3b448a2)
-![Image](https://github.com/user-attachments/assets/20fabd0f-3222-4bc4-8c99-f9773934d00d)
+- For the ESP32S series   
+	W5500 SPI PHY.   
+	![Image](https://github.com/user-attachments/assets/fb138a71-2f3e-4f7e-a32b-6e7de3b448a2)
+	![Image](https://github.com/user-attachments/assets/20fabd0f-3222-4bc4-8c99-f9773934d00d)
 
-- For the ESP32C series
-W5500 SPI PHY.   
-![Image](https://github.com/user-attachments/assets/9d5ff23a-8152-41bc-85cb-57d21ad7da1f)
+- For the ESP32C series   
+	W5500 SPI PHY.   
+	![Image](https://github.com/user-attachments/assets/9d5ff23a-8152-41bc-85cb-57d21ad7da1f)
 
-# Configuration   
-- Using external LAN8720 RMII PHY
+# Configuration for HTTP Server   
+![Image](https://github.com/user-attachments/assets/cec26b98-a664-4973-a9f5-f0015f637c7b)
+![Image](https://github.com/user-attachments/assets/e4a138ec-b7dc-4962-a834-ad2db7b46b68)
+The listening port for WiFi and the listening port for Ethernet must be different ports.   
+
+# Configuration for Connection   
+- Using external LAN8720 RMII PHY   
 You will need to add a jumper to the LAN8270 according to [this](https://sautter.com/blog/ethernet-on-esp32-using-lan8720/) page.   
 ![Image](https://github.com/user-attachments/assets/9a0e7dbd-29f9-4ec5-9032-1ba454eea785)
 
-- Using WT32-ETH01
+- Using WT32-ETH01   
 ![Image](https://github.com/user-attachments/assets/ecf17ee4-2b27-4f0b-8b3b-1d150de6af1d)
 
-- Using external W5500 SPI PHY
+- Using external W5500 SPI PHY   
 Any GPIO can be used.   
 However, interrupts require a GPIO that supports interrupts.   
 Increasing the SPI clock speed will result in an error.   
