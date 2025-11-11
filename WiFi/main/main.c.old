@@ -1,0 +1,96 @@
+/* WiFi and Ethernet dual HTTP server example
+
+   This example code is in the Public Domain (or CC0 licensed, at your option.)
+
+   Unless required by applicable law or agreed to in writing, this
+   software is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR
+   CONDITIONS OF ANY KIND, either express or implied.
+*/
+
+#include <stdio.h>
+#include <inttypes.h>
+#include <string.h>
+
+#include "freertos/FreeRTOS.h"
+#include "freertos/task.h"
+#include "freertos/message_buffer.h"
+#include "nvs_flash.h"
+#include "esp_netif.h"
+#include "protocol_examples_common.h"
+#include "esp_http_server.h"
+#include "esp_log.h"
+
+#include "parameter.h"
+
+static const char *TAG = "MAIN";
+
+MessageBufferHandle_t xMessageBufferSta;
+MessageBufferHandle_t xMessageBufferEth;
+
+// The total number of bytes (not messages) the message buffer will be able to hold at any one time.
+size_t xBufferSizeBytes = 1024;
+
+void http_server(void *pvParameters);
+
+void app_main(void)
+{
+	ESP_ERROR_CHECK(nvs_flash_init());
+	ESP_ERROR_CHECK(esp_netif_init());
+	ESP_ERROR_CHECK(esp_event_loop_create_default());
+
+	/* This helper function configures Wi-Fi or Ethernet, as selected in menuconfig.
+	 * Read "Establishing Wi-Fi or Ethernet Connection" section in
+	 * examples/protocols/README.md for more information about this function.
+	 */
+	ESP_ERROR_CHECK(example_connect());
+
+	// Create MessageBuffer
+	xMessageBufferSta = xMessageBufferCreate(xBufferSizeBytes);
+	configASSERT( xMessageBufferSta );
+	xMessageBufferEth = xMessageBufferCreate(xBufferSizeBytes);
+	configASSERT( xMessageBufferEth);
+
+#ifdef CONFIG_EXAMPLE_CONNECT_WIFI
+	// Create an HTTP server for WiFi
+	esp_netif_ip_info_t ip_info_wifi;
+	ESP_ERROR_CHECK(esp_netif_get_ip_info(esp_netif_get_handle_from_ifkey("WIFI_STA_DEF"), &ip_info_wifi));
+	PARAMETER_t param_primary;
+	sprintf(param_primary.ip, IPSTR, IP2STR(&ip_info_wifi.ip));
+	param_primary.server_port = CONFIG_PRIMARY_SERVER_PORT;
+	param_primary.ctrl_port = 32767;
+	strcpy(param_primary.user_ctx, CONFIG_PRIMARY_USER_CONTEXT);
+	ESP_LOGD(TAG, "param_primary.ip=[%s]", param_primary.ip);
+	xTaskCreate(&http_server, "HTTP_SERVER_PRIMARY", 1024*4, (void *)&param_primary, 5, NULL);
+
+	PARAMETER_t param_secondary;
+	sprintf(param_secondary.ip, IPSTR, IP2STR(&ip_info_wifi.ip));
+	param_secondary.server_port = CONFIG_SECONDARY_SERVER_PORT;
+	param_secondary.ctrl_port = 32768;
+	strcpy(param_secondary.user_ctx, CONFIG_SECONDARY_USER_CONTEXT);
+	ESP_LOGD(TAG, "param_secondary.ip=[%s]", param_primary.ip);
+	xTaskCreate(&http_server, "HTTP_SERVER_SECONDARY", 1024*4, (void *)&param_secondary, 5, NULL);
+#endif
+
+#ifdef CONFIG_EXAMPLE_CONNECT_ETHERNET
+	// Create an HTTP Server for Ethernet
+	esp_netif_ip_info_t ip_info_eth;
+	ESP_ERROR_CHECK(esp_netif_get_ip_info(esp_netif_get_handle_from_ifkey("ETH_DEF"), &ip_info_eth));
+	PARAMETER_t param_eth;
+	sprintf(param_eth.ip, IPSTR, IP2STR(&ip_info_eth.ip));
+	param_eth.server_port = CONFIG_ETH_SERVER_PORT;
+	param_eth.ctrl_port = 32768;
+	strcpy(param_eth.user_ctx, "Ethernet");
+	ESP_LOGD(TAG, "param_eth.ip=[%s]", param_eth.ip);
+	xTaskCreate(&http_server, "HTTP_SERVER_ETH", 1024*4, (void *)&param_eth, 5, NULL);
+#endif
+
+	char data[256];
+	while(1) {
+		size_t received_sta = xMessageBufferReceive(xMessageBufferSta, data, sizeof(data), 50);
+		ESP_LOGD(TAG, "received_sta=%d", received_sta);
+		if (received_sta != 0) ESP_LOGI(TAG, "xMessageBufferSta data=[%.*s]", received_sta, data);
+		size_t received_eth = xMessageBufferReceive(xMessageBufferEth, data, sizeof(data), 50);
+		ESP_LOGD(TAG, "received_eth=%d", received_eth);
+		if (received_eth != 0) ESP_LOGI(TAG, "xMessageBufferEth data=[%.*s]", received_eth, data);
+	}
+}

@@ -1,0 +1,4 @@
+#
+# WiFi Scan threshold
+#
+CONFIG_EXAMPLE_CONNECT_IPV6=n

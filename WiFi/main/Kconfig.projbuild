@@ -1,0 +1,45 @@
+menu "Application Configuration"
+
+	config ESP_WIFI_SSID
+		string "WiFi SSID"
+		default "myssid"
+		help
+			SSID (network name) to connect to.
+
+	config ESP_WIFI_PASSWORD
+		string "WiFi Password"
+		default "mypassword"
+		help
+			WiFi password (WPA or WPA2) to use.
+
+	config ESP_MAXIMUM_RETRY
+		int "Maximum retry"
+		default 5
+		help
+			Set the Maximum retry to avoid station reconnecting to the AP unlimited when the AP is really inexistent.
+
+	config PRIMARY_SERVER_PORT
+		int "Listening port for primary"
+		default 8080
+		help
+			Listening port for secondary.
+
+	config PRIMARY_USER_CONTEXT
+		string "User context for primary"
+		default "This is primary server page"
+		help
+			User context for primary,
+
+	config SECONDARY_SERVER_PORT
+		int "Listening port for secondary"
+		default 8081
+		help
+			Listening port for secondary.
+
+	config SECONDARY_USER_CONTEXT
+		string "User context for secondary"
+		default "This is secondary server page"
+		help
+			User context for secondary.
+
+endmenu
