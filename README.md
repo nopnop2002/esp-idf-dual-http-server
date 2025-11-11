@@ -59,6 +59,10 @@ However, interrupts require a GPIO that supports interrupts.
 Increasing the SPI clock speed will result in an error.   
 ![Image](https://github.com/user-attachments/assets/00c3dd99-59c7-48d1-930f-ae4a6a2fca18)
 
+- Using WiFi and Ethernet   
+The WiFi interface must be enabled.   
+![Image](https://github.com/user-attachments/assets/b8630da0-a559-49ad-8962-83764722e1b5)
+
 # WEB pages   
 - WiFi port
 ![Image](https://github.com/user-attachments/assets/18a83dcc-560a-43c2-ae9b-7880e2719223)
