@@ -21,9 +21,11 @@ The listening port for primary and the listening port for secondary must be diff
 
 # WEB pages   
 - Primary port   
+The port number is 8080.   
 ![Image](https://github.com/user-attachments/assets/ff097ee9-a5b3-418e-b92a-64e1afdbcf0e)
 ![Image](https://github.com/user-attachments/assets/328fa4d1-d59f-4144-b112-aa4a24b46656)
 
 - Secondary port   
+The port number is 8081.   
 ![Image](https://github.com/user-attachments/assets/97614197-4b05-415a-9589-3f9c3b5bc3dc)
 ![Image](https://github.com/user-attachments/assets/056d053a-3e62-417a-8d15-00f2b8043841)
