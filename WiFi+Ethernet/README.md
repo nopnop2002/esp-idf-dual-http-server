@@ -60,12 +60,14 @@ The WiFi interface must be enabled.
 # WEB pages   
 - WiFi interface   
 The IP address is 192.168.0.138 and the port number is 8080.   
+The IP address depends on the environment.   
 The port number can be changed in menuconfig.   
 ![Image](https://github.com/user-attachments/assets/18a83dcc-560a-43c2-ae9b-7880e2719223)
 ![Image](https://github.com/user-attachments/assets/24beb4f5-4295-47c4-9b44-81d27c4d847d)
 
 - Ethernet interface   
 The IP address is 192.168.0.137 and the port number is 8081.   
+The IP address depends on the environment.   
 The port number can be changed in menuconfig.   
 ![Image](https://github.com/user-attachments/assets/c83fa7d8-89cd-4543-b169-8e7f9d7122ae)
 ![Image](https://github.com/user-attachments/assets/cd3486f0-a7bf-4d3a-b6a6-03b3a4087b1e)
