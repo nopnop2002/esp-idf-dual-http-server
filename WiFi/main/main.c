@@ -16,6 +16,7 @@
 #include "esp_log.h"
 #include "nvs_flash.h"
 
+#include "mdns.h"
 #include "parameter.h"
 
 /* FreeRTOS event group to signal when we are connected*/
@@ -126,6 +127,20 @@ esp_err_t wifi_init_sta(void)
 	return ret_value;
 }
 
+void initialize_mdns(void)
+{
+	//initialize mDNS
+	ESP_ERROR_CHECK( mdns_init() );
+	//set mDNS hostname (required if you want to advertise services)
+	ESP_ERROR_CHECK( mdns_hostname_set(CONFIG_MDNS_HOSTNAME));
+	ESP_LOGI(TAG, "mdns hostname set to: [%s]", CONFIG_MDNS_HOSTNAME);
+
+#if 0
+	//set default mDNS instance name
+	ESP_ERROR_CHECK( mdns_instance_name_set("ESP32 with mDNS") );
+#endif
+}
+
 void http_server(void *pvParameters);
 
 void app_main(void)
@@ -141,23 +156,26 @@ void app_main(void)
 	// Initialize WiFi
 	ESP_ERROR_CHECK(wifi_init_sta());
 
-    // Create an HTTP server for primary
-    esp_netif_ip_info_t ip_info_wifi;
-    ESP_ERROR_CHECK(esp_netif_get_ip_info(esp_netif_get_handle_from_ifkey("WIFI_STA_DEF"), &ip_info_wifi));
-    PARAMETER_t param_primary;
-    sprintf(param_primary.ip, IPSTR, IP2STR(&ip_info_wifi.ip));
-    param_primary.server_port = CONFIG_PRIMARY_SERVER_PORT;
-    param_primary.ctrl_port = 32767;
-    strcpy(param_primary.user_ctx, CONFIG_PRIMARY_USER_CONTEXT);
-    ESP_LOGD(TAG, "param_primary.ip=[%s]", param_primary.ip);
-    xTaskCreate(&http_server, "HTTP_SERVER_PRIMARY", 1024*4, (void *)&param_primary, 5, NULL);
+	// Initialize mDNS
+	initialize_mdns();
 
-    // Create an HTTP server for secondary
-    PARAMETER_t param_secondary;
-    sprintf(param_secondary.ip, IPSTR, IP2STR(&ip_info_wifi.ip));
-    param_secondary.server_port = CONFIG_SECONDARY_SERVER_PORT;
-    param_secondary.ctrl_port = 32768;
-    strcpy(param_secondary.user_ctx, CONFIG_SECONDARY_USER_CONTEXT);
-    ESP_LOGD(TAG, "param_secondary.ip=[%s]", param_primary.ip);
-    xTaskCreate(&http_server, "HTTP_SERVER_SECONDARY", 1024*4, (void *)&param_secondary, 5, NULL);
+	// Create an HTTP server for primary
+	esp_netif_ip_info_t ip_info_wifi;
+	ESP_ERROR_CHECK(esp_netif_get_ip_info(esp_netif_get_handle_from_ifkey("WIFI_STA_DEF"), &ip_info_wifi));
+	PARAMETER_t param_primary;
+	sprintf(param_primary.ip, IPSTR, IP2STR(&ip_info_wifi.ip));
+	param_primary.server_port = CONFIG_PRIMARY_SERVER_PORT;
+	param_primary.ctrl_port = 32767;
+	strcpy(param_primary.user_ctx, CONFIG_PRIMARY_USER_CONTEXT);
+	ESP_LOGD(TAG, "param_primary.ip=[%s]", param_primary.ip);
+	xTaskCreate(&http_server, "HTTP_SERVER_PRIMARY", 1024*4, (void *)&param_primary, 5, NULL);
+
+	// Create an HTTP server for secondary
+	PARAMETER_t param_secondary;
+	sprintf(param_secondary.ip, IPSTR, IP2STR(&ip_info_wifi.ip));
+	param_secondary.server_port = CONFIG_SECONDARY_SERVER_PORT;
+	param_secondary.ctrl_port = 32768;
+	strcpy(param_secondary.user_ctx, CONFIG_SECONDARY_USER_CONTEXT);
+	ESP_LOGD(TAG, "param_secondary.ip=[%s]", param_primary.ip);
+	xTaskCreate(&http_server, "HTTP_SERVER_SECONDARY", 1024*4, (void *)&param_secondary, 5, NULL);
 }

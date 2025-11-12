@@ -16,7 +16,7 @@ idf.py flash
 
 # Configuratio   
 ![Image](https://github.com/user-attachments/assets/9888afeb-f9a9-4782-b244-c25b3ec0686e)   
-![Image](https://github.com/user-attachments/assets/de733b2f-cf78-4338-a86b-b6e17588f6de)   
+![Image](https://github.com/user-attachments/assets/7e0a1864-cda5-43f4-9b17-78ef063f2fd5)   
 The listening port for primary and the listening port for secondary must be different ports.   
 
 # WEB pages   
@@ -31,3 +31,12 @@ The port number is 8081.
 The port number can be changed in menuconfig.   
 ![Image](https://github.com/user-attachments/assets/97614197-4b05-415a-9589-3f9c3b5bc3dc)
 ![Image](https://github.com/user-attachments/assets/056d053a-3e62-417a-8d15-00f2b8043841)
+
+# mDNS host name   
+You can use mDNS hostnames instead of IP addresses.   
+![Image](https://github.com/user-attachments/assets/d5cabbfe-919a-4a30-98b2-02e79887ff08)
+![Image](https://github.com/user-attachments/assets/348717db-3494-4cb7-90ee-0540c5507d50)
+
+
+The mDNS hostname is specified in menuconfig.   
+![Image](https://github.com/user-attachments/assets/e003f558-4243-4cf4-9d3e-f651d82cee6c)
